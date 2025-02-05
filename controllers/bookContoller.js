@@ -1,6 +1,33 @@
 const Book=require("../models/Book");
 const mongoose = require("mongoose"); 
 
+
+exports.uploadCover = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "Invalid book ID format" });
+        }
+
+        const book = await Book.findById(id);
+        if (!book) {
+            return res.status(404).json({ message: "Book not found" });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+
+        book.coverPhoto = `/uploads/${req.file.filename}`;
+        await book.save();
+
+        res.status(200).json({ message: "Cover image uploaded successfully", coverPhoto: book.coverPhoto });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 exports.getBooks=async (req,res)=>{
    try{
     const books=await Book.find();

@@ -4,6 +4,7 @@ const mongoose=require('mongoose');
 const bodyParser=require('body-parser');
 const bookRoutes= require("./routes/bookRoutes");
 const authorRoutes=require("./routes/authorRoutes");
+const userRoutes = require("./routes/userRoutes");
 const app=express();
 
 const PORT=process.env.PORT || 4000;
@@ -30,6 +31,7 @@ app.get('/',(req,res)=>{
         city:"lucknow"
     })
 })
+app.use('/users',userRoutes);
 app.use('/books',bookRoutes);
 app.use('/authors',authorRoutes);
 
