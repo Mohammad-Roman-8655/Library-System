@@ -5,12 +5,14 @@ const bodyParser=require('body-parser');
 const bookRoutes= require("./routes/bookRoutes");
 const authorRoutes=require("./routes/authorRoutes");
 const userRoutes = require("./routes/userRoutes");
+const loanRoutes = require("./routes/loanRoutes");
 const app=express();
-
+const path = require("path");
 const PORT=process.env.PORT || 4000;
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 
@@ -34,6 +36,7 @@ app.get('/',(req,res)=>{
 app.use('/users',userRoutes);
 app.use('/books',bookRoutes);
 app.use('/authors',authorRoutes);
+app.use("/loans", loanRoutes);
 
 app.listen(PORT,(req,res)=>{
     console.log(`Server is running on PORT : ${PORT}`);
