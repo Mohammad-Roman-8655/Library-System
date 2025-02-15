@@ -6,6 +6,7 @@ const bookRoutes= require("./routes/bookRoutes");
 const authorRoutes=require("./routes/authorRoutes");
 const userRoutes = require("./routes/userRoutes");
 const loanRoutes = require("./routes/loanRoutes");
+const reviewRoutes=require("./routes/reviewRoutes")
 const app=express();
 const path = require("path");
 const PORT=process.env.PORT || 4000;
@@ -35,6 +36,7 @@ app.get('/',(req,res)=>{
 })
 app.use('/users',userRoutes);
 app.use('/books',bookRoutes);
+app.use('/books',reviewRoutes);
 app.use('/authors',authorRoutes);
 app.use("/loans", loanRoutes);
 
